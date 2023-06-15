@@ -3,10 +3,12 @@
 #include <iostream>
 #include <string>
 #include "utils.hpp"
-#include <numberbuilder.hpp>
 #include <limits>
 #include <numeric>
+#include "betternumbers.hpp"
 
 int main(int argc, const char** argv) {
-	std::cout << numberbuilder::numberbuilder(0) << std::endl;
+	using numb = Betternumbers::Number;
+	numb a(21, 37);
+	std::cout << a << std::endl;
 }

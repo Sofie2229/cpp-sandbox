@@ -15,7 +15,4 @@ file(GLOB_RECURSE SRC_FILES
 	"*.hxx"
 )
 
-add_subdirectory(../libs/NumberBuilder ../libs/NumberBuilder)
-link_libraries(NumberBuilder)
-
 add_executable("${PROJECT_NAME}" "${SRC_FILES}")

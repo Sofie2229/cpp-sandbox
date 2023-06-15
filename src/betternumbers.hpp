@@ -1,20 +1,32 @@
 #pragma once
+
 #include <cmath>
 #include <stdexcept>
 #include <iostream>
+#include <cstdint>
+
+#define FROM_FLOAT_PREC 1000000000
 
 namespace Betternumbers {
 
 class Number {
 public:
-	int den, num;
+	int64_t den, num;
 	Number() {
 		den = 1; 
 		num = 0;
 	}
-	Number(int num, int den): num(num), den(den) {}
-	Number(int number): num(number), den(1) {}
+	Number(int64_t num, int64_t den): num(num), den(den) {}
+	Number(int64_t number): num(number), den(1) {}
+	Number(int32_t num, int32_t den): num(num), den(den) {}
+	Number(int32_t number): num(number), den(1) {}
 	Number(const Number& other): num(other.num), den(other.den) {}
+	Number(const float number): num(number * FROM_FLOAT_PREC), den(FROM_FLOAT_PREC) {
+		normalize();
+	}
+	Number(const double number): num(number * FROM_FLOAT_PREC), den(FROM_FLOAT_PREC) {
+		normalize();
+	}
 
 	Number operator+(const Number rhs) const;
 	Number operator-(const Number rhs) const;
@@ -28,7 +40,7 @@ public:
 	Number operator*=(const Number rhs);
 	Number operator/=(const Number rhs);
 	
-	operator int() const noexcept {
+	operator int64_t() const noexcept {
 		return num / den;
 	}
 
@@ -131,31 +143,31 @@ Number Number::operator=(const Number rhs) noexcept {
 }
 
 Number Number::operator+=(const Number rhs) {
-	auto lhs = *this;
-	Number t = lhs + rhs;
+	Number t = *this + rhs;
 	this->num = t.num;
 	this->den = t.den;
+	return *this;
 }
 
 Number Number::operator-=(const Number rhs) {
-	auto lhs = *this;
-	Number t = lhs - rhs;
+	Number t = *this - rhs;
 	this->num = t.num;
 	this->den = t.den;
+	return *this;
 }
 
 Number Number::operator*=(const Number rhs) {
-	auto lhs = *this;
-	Number t = lhs * rhs;
+	Number t = *this * rhs;
 	this->num = t.num;
 	this->den = t.den;
+	return *this;
 }
 
 Number Number::operator/=(const Number rhs) {
-	auto lhs = *this;
-	Number t = lhs / rhs;
+	Number t = *this / rhs;
 	this->num = t.num;
 	this->den = t.den;
+	return *this;
 }
 
 
